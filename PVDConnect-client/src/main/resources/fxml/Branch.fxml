@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.kesler.client.gui.branch.BranchController">
+   <children>
+      <GridPane hgap="5.0" prefHeight="205.0" prefWidth="537.0" vgap="5.0" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="132.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="477.0" minWidth="10.0" prefWidth="329.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.0" minWidth="10.0" prefWidth="123.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" text="Код" GridPane.halignment="RIGHT" />
+            <Label text="Наименование" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <TextField fx:id="codeTextField" maxWidth="144.0" prefHeight="26.0" prefWidth="144.0" GridPane.columnIndex="1" />
+            <TextArea fx:id="nameTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+            <Label text="ПК ПВД IP" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <TextField fx:id="pvdIpTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="pvdUserTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <PasswordField fx:id="pvdPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="ПК ПВД User" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+            <Label text="ПК ПВД Pass" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+      <ToolBar prefHeight="44.0" prefWidth="600.0">
+        <items>
+          <Button mnemonicParsing="false" onAction="#handleOkButtonAction" text="ОК" />
+          <Button mnemonicParsing="false" onAction="#handleCancelButtonAction" text="Отмена" />
+        </items>
+      </ToolBar>
+   </children>
+</VBox>

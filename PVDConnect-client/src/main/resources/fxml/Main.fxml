@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox fx:id="root" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kesler.client.gui.main.MainController">
+  <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Действия">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleChecksMenuItemAction" text="Проверки" />
+              <MenuItem mnemonicParsing="false" onAction="#handleCloseMenuItemAction" text="Закрыть" />
+            </items>
+          </Menu>
+          <Menu fx:id="configMenu" mnemonicParsing="false" text="Настройки">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleBranchListMenuItemAction" text="Филиалы" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Помощь">
+            <items>
+              <MenuItem mnemonicParsing="false" text="О программе" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextField fx:id="findTextField" layoutX="132.0" layoutY="20.0" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="20.0" />
+            <TableView fx:id="recordTableView" layoutX="24.0" layoutY="57.0" onMouseClicked="#handleRecordTableViewMouseClicked" prefHeight="278.0" prefWidth="590.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="57.0">
+              <columns>
+                <TableColumn prefWidth="200.0" text="Номер">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="regnum" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="100.0" text="Дата">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="regdateString" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="200.0" text="Филиал">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="branchName" />
+                    </cellValueFactory>
+                </TableColumn>
+              </columns>
+            </TableView>
+            <Label layoutX="25.0" layoutY="25.0" text="Код Росреестра" />
+            <Button fx:id="findButton" defaultButton="true" layoutX="306.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleFindRecordsByCodeButtonAction">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../images/zoom.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="checkBranchesButton" layoutX="524.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleCheckBranchesButtonAction" text="Перечитать" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="20.0" />
+            <ProgressIndicator fx:id="findProgressIndicator" layoutX="348.0" layoutY="18.0" prefHeight="29.0" prefWidth="34.0" visible="false" />
+         </children></AnchorPane>
+      <GridPane hgap="5">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="2000.0" minWidth="10.0" prefWidth="318.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="199.0" prefWidth="199.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Состояние:" />
+            <Label fx:id="taskMessageLabel" text="Обновлено" textFill="#287c1f" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="taskProgressBar" prefWidth="200.0" visible="false" GridPane.columnIndex="2" />
+            <Label fx:id="taskPercentLabel" text="${(100 * taskProgressBar.progress)+'%'}" visible="${taskProgressBar.visible}" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </GridPane>
+  </children>
+</VBox>

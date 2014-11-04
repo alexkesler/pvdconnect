@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kesler.client.gui.cause.CauseController">
+   <children>
+      <GridPane hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="83.0" prefWidth="83.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="213.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="52.0" minWidth="10.0" prefWidth="52.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="157.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="185.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <Label text="Номер" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <TextField fx:id="regnumTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="regdateTextField" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label text="от" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="Заявители" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <ListView fx:id="applicatorsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+            <Label text="Объект" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+            <TextField fx:id="objTextField" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+            <Label text="Статус" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <TextField fx:id="curStepTextField" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
+            <ListView fx:id="stepsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" GridPane.rowSpan="2" />
+            <Label text="История" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+            <Label text="Филиал" GridPane.halignment="RIGHT" />
+            <TextField fx:id="branchTextField" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="4" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+      <ToolBar prefHeight="39.0" prefWidth="623.0">
+        <items>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="Закрыть" />
+            <ProgressIndicator fx:id="updateProgressIndicator" prefHeight="24.0" prefWidth="31.0" visible="false" />
+        </items>
+      </ToolBar>
+   </children>
+</VBox>

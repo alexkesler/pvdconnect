@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kesler.client.gui.check.ChecksController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="updateButton" mnemonicParsing="false" onAction="#handleUpdateButtonAction" text="Обновить" />
+            <ProgressIndicator fx:id="updateProgressIndicator" prefHeight="8.0" prefWidth="29.0" />
+        </items>
+      </ToolBar>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TableView fx:id="checksTableView" layoutX="170.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+              <columns>
+                <TableColumn editable="false" minWidth="132.0" prefWidth="132.0" text="Дата">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="checkDateString" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="336.0" text="Филиал">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="branchName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="95.0" text="Кол-во записей">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="recordsSize" />
+                    </cellValueFactory>
+                </TableColumn>
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" onAction="#handleCloseButtonAction" text="Закрыть" />
+        </items>
+      </ToolBar>
+   </children>
+</VBox>
