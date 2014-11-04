@@ -158,11 +158,11 @@
                             <jar>target/${project.artifactId}.jar</jar>
                             <errTitle>${product.title}</errTitle>
                             <icon>src/main/resources/images/Bibble.ico</icon>
-                            <splash>
+                            <!--<splash>
                                 <file>src/main/resources/images/mfc.bmp</file>
                                 <waitForWindow>true</waitForWindow>
                                 <timeout>10</timeout>
-                            </splash>
+                            </splash>-->
                             <classPath>
                                 <mainClass>org.kesler.client.SimpleRestApp</mainClass>
                                 <addDependencies>true</addDependencies>
@@ -170,8 +170,8 @@
                             </classPath>
                             <jre>
                                 <path>jre8</path>
-                                <!-- <minVersion>1.6.0</minVersion> -->
-                                <maxHeapSize>512</maxHeapSize>
+                                <!--<minVersion>1.8.0</minVersion> -->
+                                <maxHeapSize>256</maxHeapSize>
                             </jre>
                             <versionInfo>
                                 <fileVersion>${project.version}</fileVersion>

@@ -3,4 +3,5 @@
 *.xlsx
 *.iml
 .idea/
-log/
+**/log/
+**/jre8/
