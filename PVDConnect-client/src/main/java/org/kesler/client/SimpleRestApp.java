@@ -2,6 +2,7 @@ package org.kesler.client;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.kesler.client.gui.main.MainController;
 import org.slf4j.Logger;
@@ -39,10 +40,10 @@ public class SimpleRestApp extends Application {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SimpleRestAppFactory.class);
         MainController mainController = context.getBean(MainController.class);
-        Scene scene = new Scene(mainController.getRoot(), 600, 400);
-        scene.getStylesheets().add("/styles/styles.css");
+        Scene scene = new Scene(mainController.getRoot(), 700, 500);
         stage.setScene(scene);
         stage.setTitle("Проверка статусов дел ПК ПВД");
+        stage.getIcons().add(new Image(SimpleRestApp.class.getResourceAsStream("/images/Bibble.png")));
         stage.show();
     }
 }
