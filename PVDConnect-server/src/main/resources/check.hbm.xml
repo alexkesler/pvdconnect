@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.kesler.server.domain">
+    <class name="Check" table="Checks">
+        <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="uuid"/>
+        <many-to-one name="branch" class="Branch" column="BranchID" not-null="true"/>
+        <set name="records">
+            <key column="CheckID" />
+            <one-to-many class="Record" />
+        </set>
+        <property name="checkDate" type="timestamp" column="CheckDate" />
+
+    </class>
+</hibernate-mapping>

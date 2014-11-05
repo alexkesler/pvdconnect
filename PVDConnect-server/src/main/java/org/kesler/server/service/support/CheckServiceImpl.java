@@ -126,7 +126,7 @@ public class CheckServiceImpl implements CheckService {
 
             Record record = new Record();
             record.setBranch(check.getBranch());
-            record.setCauseId(rs.getString("ID_CAUSE"));
+            record.setCausePvdId(rs.getString("ID_CAUSE"));
             record.setRegnum(rs.getString("REGNUM"));
             record.setRegdate(rs.getDate("REGDATE"));
 

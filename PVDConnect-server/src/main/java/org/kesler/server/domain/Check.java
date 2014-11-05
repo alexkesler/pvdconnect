@@ -7,6 +7,7 @@ import java.util.*;
 public class Check {
 
     private Long id;
+    private String uuid = UUID.randomUUID().toString();
     private Branch branch;
     private Set<Record> records;
     private Date checkDate;
@@ -19,6 +20,8 @@ public class Check {
     }
 
     public Long getId() { return id; }
+
+    public String getUuid() { return uuid; }
 
     public Branch getBranch() {
         return branch;

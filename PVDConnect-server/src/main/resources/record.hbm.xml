@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.kesler.server.domain">
+    <class name="Record" table="Records">
+        <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="branch" column="BranchID" not-null="true" />
+        <property name="causePvdId" column="CausePVDID"/>
+        <property name="regnum" column="Regnum"/>
+        <property name="regdate" type="timestamp" column="Regdate"/>
+    </class>
+</hibernate-mapping>

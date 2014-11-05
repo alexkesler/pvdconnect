@@ -24,20 +24,20 @@ public class CauseServiceImpl implements CauseService {
     public Cause getCauseByRecord(Record record){
 
         Cause cause = new Cause();
-        cause.setId(record.getCauseId());
+        cause.setId(record.getCausePvdId());
         cause.setRecord(record);
 
         String objQuery = "SELECT O.FULLADDRESS " +
                 "FROM DPS$D_CAUSE C " +
                 "LEFT JOIN DPS$OBJ O ON O.ID_CAUSE=C.ID " +
-                "WHERE C.ID='" + record.getCauseId() + "'";
+                "WHERE C.ID='" + record.getCausePvdId() + "'";
 
 
         String applicatorsQuery = "";
 
         String stepsQuery = "SELECT S.RESOLUTION, S.ID_OPERATION, S.DATEBEGIN, S.DATEEND, S.STATE " +
                 "FROM DPS$STEP S " +
-                "WHERE S.ID_CAUSE='" + record.getCauseId() + "' " +
+                "WHERE S.ID_CAUSE='" + record.getCausePvdId() + "' " +
                 "ORDER BY S.DATEBEGIN";
 
         Branch branch = record.getBranch();

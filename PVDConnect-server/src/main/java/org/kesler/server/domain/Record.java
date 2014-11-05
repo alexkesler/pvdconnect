@@ -7,7 +7,7 @@ import java.util.Date;
 public class Record {
     private Long id;
     private Branch branch;
-    private String causeId;
+    private String causePvdId;
     private String regnum;
     private Date regdate;
 
@@ -21,8 +21,8 @@ public class Record {
         return branch ==null?"": branch.getName();
     }
 
-    public String getCauseId() { return causeId; }
-    public void setCauseId(String causeId) { this.causeId = causeId; }
+    public String getCausePvdId() { return causePvdId; }
+    public void setCausePvdId(String causePvdId) { this.causePvdId = causePvdId; }
 
     public String getRegnum() { return regnum; }
     public void setRegnum(String regnum) { this.regnum = regnum; }
@@ -48,7 +48,7 @@ public class Record {
         Record that = (Record) o;
 
         if (!branch.equals(that.branch)) return false;
-        if (!causeId.equals(that.causeId)) return false;
+        if (!causePvdId.equals(that.causePvdId)) return false;
         if (!regdate.equals(that.regdate)) return false;
         if (!regnum.equals(that.regnum)) return false;
 
@@ -58,7 +58,7 @@ public class Record {
     @Override
     public int hashCode() {
         int result = branch.hashCode();
-        result = 31 * result + causeId.hashCode();
+        result = 31 * result + causePvdId.hashCode();
         result = 31 * result + regnum.hashCode();
         result = 31 * result + regdate.hashCode();
         return result;

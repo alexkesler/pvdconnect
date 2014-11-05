@@ -12,7 +12,7 @@ public abstract class RecordTransform {
         RecordDTO recordDTO = new RecordDTO();
 
         recordDTO.setId(record.getId());
-        recordDTO.setCauseId(record.getCauseId());
+        recordDTO.setCauseId(record.getCausePvdId());
         recordDTO.setBranchDTO(BranchTransform.transform(record.getBranch()));
         recordDTO.setRegnum(record.getRegnum());
         recordDTO.setRegdate(record.getRegdate());
@@ -35,7 +35,7 @@ public abstract class RecordTransform {
 
         record.setId(recordDTO.getId());
         record.setBranch(BranchTransform.transform(recordDTO.getBranchDTO()));
-        record.setCauseId(recordDTO.getCauseId());
+        record.setCausePvdId(recordDTO.getCauseId());
         record.setRegnum(recordDTO.getRegnum());
         record.setRegdate(recordDTO.getRegdate());
 
