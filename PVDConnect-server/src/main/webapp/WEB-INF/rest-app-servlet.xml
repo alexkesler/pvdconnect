@@ -43,6 +43,6 @@
     <task:executor id="taskExecutor" pool-size="1"/>
     <task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
 
-    <bean id="checkSheduler" class="org.kesler.server.shedule.CheckSheduler" />
+    <bean id="checkScheduler" class="org.kesler.server.schedule.CheckScheduler" />
 
 </beans>

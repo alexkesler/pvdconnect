@@ -1,4 +1,4 @@
-package org.kesler.server.shedule;
+package org.kesler.server.schedule;
 
 import org.kesler.server.service.CheckService;
 import org.slf4j.Logger;
@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CheckSheduler {
-    private static Logger log = LoggerFactory.getLogger(CheckSheduler.class);
+public class CheckScheduler {
+    private static Logger log = LoggerFactory.getLogger(CheckScheduler.class);
 
     @Autowired
     CheckService checkService;
