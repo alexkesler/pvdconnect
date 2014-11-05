@@ -35,7 +35,7 @@ public class BranchRepositorySimpleImpl implements BranchRepository {
     @Override
     public void updateBranch(Branch branch) {
         for (Branch oldBranch:branches) {
-            if (oldBranch.getId()==branch.getId()) {
+            if (oldBranch.getUuid().equals(branch.getUuid())) {
                 oldBranch.setName(branch.getName());
                 oldBranch.setCode(branch.getCode());
                 oldBranch.setPvdIp(branch.getPvdIp());

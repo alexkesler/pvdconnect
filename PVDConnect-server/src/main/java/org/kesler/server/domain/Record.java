@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Record implements Comparable<Record> {
+public class Record {
     private Long id;
     private Branch branch;
     private String causeId;
@@ -38,13 +38,6 @@ public class Record implements Comparable<Record> {
     public String getRegdateString() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return regdate==null?"":simpleDateFormat.format(regdate);
-    }
-
-    @Override
-    public int compareTo(Record o) {
-        if(o.getRegdate().before(regdate)) return 1;
-        else if (o.getRegdate().after(regdate)) return -1;
-        return 0;
     }
 
     @Override

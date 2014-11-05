@@ -13,6 +13,7 @@ public abstract class BranchTransform {
         BranchDTO branchDTO = new BranchDTO();
 
         branchDTO.setId(branch.getId());
+        branchDTO.setUuid(branch.getUuid());
         branchDTO.setCode(branch.getCode());
         branchDTO.setName(branch.getName());
         branchDTO.setPvdIp(branch.getPvdIp());
@@ -26,6 +27,7 @@ public abstract class BranchTransform {
         Branch branch = new Branch();
 
         branch.setId(branchDTO.getId());
+        branch.setUuid(branchDTO.getUuid());
         branch.setCode(branchDTO.getCode());
         branch.setName(branchDTO.getName());
         branch.setPvdIp(branchDTO.getPvdIp());
