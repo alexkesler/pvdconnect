@@ -40,24 +40,11 @@ public class Branch {
 
         Branch branch = (Branch) o;
 
-        if (code != null ? !code.equals(branch.code) : branch.code != null) return false;
-        if (id != null ? !id.equals(branch.id) : branch.id != null) return false;
-        if (name != null ? !name.equals(branch.name) : branch.name != null) return false;
-        if (pvdIp != null ? !pvdIp.equals(branch.pvdIp) : branch.pvdIp != null) return false;
-        if (pvdPassword != null ? !pvdPassword.equals(branch.pvdPassword) : branch.pvdPassword != null) return false;
-        if (pvdUser != null ? !pvdUser.equals(branch.pvdUser) : branch.pvdUser != null) return false;
-
-        return true;
+        return this.uuid.equals(branch.getUuid());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (pvdIp != null ? pvdIp.hashCode() : 0);
-        result = 31 * result + (pvdUser != null ? pvdUser.hashCode() : 0);
-        result = 31 * result + (pvdPassword != null ? pvdPassword.hashCode() : 0);
-        return result;
+        return uuid.hashCode();
     }
 }
