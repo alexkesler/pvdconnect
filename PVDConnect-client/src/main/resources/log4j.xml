@@ -18,6 +18,17 @@
         </layout>
     </appender>
 
+       <appender name="file" class="org.apache.log4j.RollingFileAppender" >
+        <param name="Threshold" value="INFO"/>
+        <param name="maxFileSize" value="1MB"/>
+        <param name="maxBackupIndex" value="5"/>
+        <param name="file" value="log/pvdconnect-client.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss} %-5p %c{1} - %m%n"/>
+        </layout>
+    </appender>
+
+
     <!--
         By default we want to see all of our DEBUG log or higher, you might want to fine tune this for a production
         environment.
@@ -34,6 +45,7 @@
     <root>
         <priority value ="WARN" />
         <appender-ref ref="console" />
+        <appender-ref ref="file" />
     </root>
 
 </log4j:configuration>
