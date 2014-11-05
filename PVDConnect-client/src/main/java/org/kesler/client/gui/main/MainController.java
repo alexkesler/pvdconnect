@@ -31,7 +31,7 @@ public class MainController {
     @FXML protected Button checkBranchesButton;
     @FXML protected TableView<Record> recordTableView;
     @FXML protected Label taskMessageLabel;
-    @FXML protected ProgressBar taskProgressBar;
+    @FXML protected ProgressIndicator updateProgressIndicator;
     @FXML protected Menu configMenu;
 
     private boolean config = false;
@@ -167,10 +167,10 @@ public class MainController {
         BooleanBinding runningBinding = checkTack.stateProperty().isEqualTo(Task.State.RUNNING);
 
         checkBranchesButton.disableProperty().bind(runningBinding);
-        taskProgressBar.visibleProperty().bind(runningBinding);
+        updateProgressIndicator.visibleProperty().bind(runningBinding);
 
         taskMessageLabel.textProperty().bind(progressTask.messageProperty());
-        taskProgressBar.progressProperty().bind(progressTask.progressProperty());
+        updateProgressIndicator.progressProperty().bind(progressTask.progressProperty());
 
         new Thread(checkTack).start();
         new Thread(progressTask).start();

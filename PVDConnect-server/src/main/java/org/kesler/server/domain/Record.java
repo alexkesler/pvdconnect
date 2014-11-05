@@ -3,6 +3,7 @@ package org.kesler.server.domain;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class Record implements Comparable<Record> {
     private Long id;
     private Branch branch;

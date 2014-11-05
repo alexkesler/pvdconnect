@@ -1,8 +1,6 @@
 package org.kesler.server.domain;
 
 
-
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
