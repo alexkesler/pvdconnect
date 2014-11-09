@@ -7,9 +7,14 @@ public abstract class CauseTransform {
     public static Cause transform(CauseDTO causeDTO) {
         Cause cause = new Cause();
 
-        cause.setId(causeDTO.getId());
+        cause.setCauseId(causeDTO.getCauseId());
         cause.setRecord(RecordTransform.transform(causeDTO.getRecordDTO()));
-        cause.setApplicators(causeDTO.getApplcators());
+        cause.setPurposeString(causeDTO.getPurposeString());
+        cause.setStateString(causeDTO.getStateString());
+        cause.setStatusMdString(causeDTO.getStatusMdString());
+        cause.setStateChangeDate(causeDTO.getStateChangeDate());
+        cause.setEstimateDate(causeDTO.getEstimateDate());
+        cause.setApplicators(causeDTO.getApplicators());
         cause.setObj(causeDTO.getObj());
         cause.setSteps(causeDTO.getSteps());
         cause.setCurStep(causeDTO.getCurStep());

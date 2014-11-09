@@ -1,12 +1,12 @@
 package org.kesler.server.domain.cause;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Step {
     private String operation;
     private Date dateBegin;
     private Date dateEnd;
+    private Date estimateDate;
     private Integer state;
     private String resolution;
 
@@ -34,6 +34,14 @@ public class Step {
         this.dateEnd = dateEnd;
     }
 
+    public Date getEstimateDate() {
+        return estimateDate;
+    }
+
+    public void setEstimateDate(Date estimateDate) {
+        this.estimateDate = estimateDate;
+    }
+
     public Integer getState() {
         return state;
     }
@@ -50,21 +58,4 @@ public class Step {
         this.resolution = resolution;
     }
 
-    public String getCurName() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return (dateBegin==null?"no-date":dateFormat.format(dateBegin)) +
-                "-"+
-                (dateEnd==null?"no-date":dateFormat.format(dateEnd)) +
-                (operation==null?"":" (" + operation + ") - ") +
-                (resolution==null?"":resolution);
-    }
-
-    public String getHistName() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return (dateBegin==null?"no-date":dateFormat.format(dateBegin)) +
-                "-"+
-                (dateEnd==null?"no-date":dateFormat.format(dateEnd)) +
-                (operation==null?"":" (" + operation + ") - ") +
-                (resolution==null?"":resolution);
-    }
 }

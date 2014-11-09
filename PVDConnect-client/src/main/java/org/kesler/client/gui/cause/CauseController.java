@@ -17,16 +17,23 @@ import org.kesler.client.service.CauseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+@Component
 public class CauseController extends AbstractController{
     private static Logger log = LoggerFactory.getLogger(CauseController.class);
 
     @FXML protected TextField branchTextField;
     @FXML protected TextField regnumTextField;
     @FXML protected TextField regdateTextField;
+    @FXML protected TextField stateTextField;
+    @FXML protected TextField statusMdTextField;
+    @FXML protected TextField estimateDateTextField;
+    @FXML protected TextField stateChangeDateTextField;
+    @FXML protected TextField purposeTextField;
     @FXML protected ListView<String> applicatorsListView;
     @FXML protected TextField objTextField;
     @FXML protected TextField curStepTextField;
@@ -84,11 +91,17 @@ public class CauseController extends AbstractController{
     private void updateView() {
         if (cause==null) return;
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
         branchTextField.setText(cause.getRecord().getBranchName());
         regnumTextField.setText(cause.getRecord().getRegnum());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         regdateTextField.setText(dateFormat.format(cause.getRecord().getRegdate()));
+        stateTextField.setText(cause.getStateString());
+        statusMdTextField.setText(cause.getStatusMdString());
+        estimateDateTextField.setText(dateFormat.format(cause.getEstimateDate()));
+        stateChangeDateTextField.setText(dateFormat.format(cause.getStateChangeDate()));
         applicatorsListView.setItems(FXCollections.observableArrayList(cause.getApplicators()));
+        purposeTextField.setText(cause.getPurposeString());
         objTextField.setText(cause.getObj());
         curStepTextField.setText(cause.getCurStep());
         stepsListView.setItems(FXCollections.observableArrayList(cause.getSteps()));
@@ -99,6 +112,11 @@ public class CauseController extends AbstractController{
         branchTextField.setText("");
         regnumTextField.setText("");
         regdateTextField.setText("");
+        stateTextField.setText("");
+        statusMdTextField.setText("");
+        estimateDateTextField.setText("");
+        stateChangeDateTextField.setText("");
+        purposeTextField.setText("");
         applicatorsListView.setItems(FXCollections.observableArrayList(new ArrayList<String>()));
         objTextField.setText("");
         curStepTextField.setText("");

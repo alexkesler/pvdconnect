@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class CheckTransform{
+
     public static CheckDTO transform(Check check) {
         CheckDTO checkDTO = new CheckDTO();
         checkDTO.setBranchDTO(BranchTransform.transform(check.getBranch()));
@@ -25,4 +26,5 @@ public abstract class CheckTransform{
 
         return checkDTOs;
     }
+
 }

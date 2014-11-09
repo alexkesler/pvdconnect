@@ -6,8 +6,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.kesler.client.domain.Branch;
 import org.kesler.client.gui.AbstractController;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class BranchController extends AbstractController {
 
     private Branch branch;

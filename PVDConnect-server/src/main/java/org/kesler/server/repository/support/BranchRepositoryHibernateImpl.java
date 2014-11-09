@@ -47,7 +47,7 @@ public class BranchRepositoryHibernateImpl implements BranchRepository {
     @Override
     public void updateBranch(Branch branch) {
         this.sessionFactory.getCurrentSession()
-                .saveOrUpdate(branch);
+                .update(branch);
     }
 
     @Override

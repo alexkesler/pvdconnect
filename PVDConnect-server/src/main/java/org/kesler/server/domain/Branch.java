@@ -3,6 +3,7 @@ package org.kesler.server.domain;
 import java.util.UUID;
 
 public class Branch {
+
     private Long id;
     private String uuid = UUID.randomUUID().toString();
     private String code;

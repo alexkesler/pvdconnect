@@ -46,28 +46,4 @@ public class Record implements Comparable<Record> {
         return 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Record that = (Record) o;
-
-        if (!branch.equals(that.branch)) return false;
-        if (!causeId.equals(that.causeId)) return false;
-        if (!regdate.equals(that.regdate)) return false;
-        if (!regnum.equals(that.regnum)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = branch.hashCode();
-        result = 31 * result + causeId.hashCode();
-        result = 31 * result + regnum.hashCode();
-        result = 31 * result + regdate.hashCode();
-        return result;
-    }
-
 }

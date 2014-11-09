@@ -24,18 +24,19 @@ public class CauseServiceImpl implements CauseService {
     public Cause getCauseByRecord(Record record){
 
         Cause cause = new Cause();
-        cause.setId(record.getCausePvdId());
+        cause.setCauseId(record.getCausePvdId());
         cause.setRecord(record);
 
-        String objQuery = "SELECT O.FULLADDRESS " +
+        String objQuery = "SELECT O.FULLADDRESS, C.STATE, C.STATUSMD, C.PURPOSE, " +
+                "C.STARTDATE, C.STATECHANGEDATE, C.ESTIMATEDATE " +
                 "FROM DPS$D_CAUSE C " +
                 "LEFT JOIN DPS$OBJ O ON O.ID_CAUSE=C.ID " +
-                "WHERE C.ID='" + record.getCausePvdId() + "'";
+                "WHERE C.ID='" + cause.getCauseId() + "'";
 
 
         String applicatorsQuery = "";
 
-        String stepsQuery = "SELECT S.RESOLUTION, S.ID_OPERATION, S.DATEBEGIN, S.DATEEND, S.STATE " +
+        String stepsQuery = "SELECT S.RESOLUTION, S.ID_OPERATION, S.DATEBEGIN, S.DATEEND, S.ESTIMATEDATE, S.STATE " +
                 "FROM DPS$STEP S " +
                 "WHERE S.ID_CAUSE='" + record.getCausePvdId() + "' " +
                 "ORDER BY S.DATEBEGIN";
@@ -107,7 +108,16 @@ public class CauseServiceImpl implements CauseService {
     private void processObjRs(ResultSet rs, Cause cause) throws SQLException{
 
         if (rs.next()) {
-            cause.setObj(new Obj(rs.getString("FULLADDRESS")));
+            Obj obj = new Obj();
+            obj.setFullAddress(rs.getString("FULLADDRESS"));
+            cause.setObj(obj);
+            cause.setPurpose(rs.getInt("PURPOSE"));
+            cause.setState(rs.getInt("STATE"));
+            cause.setStatusMd(rs.getString("STATUSMD"));
+            cause.setStartDate(rs.getDate("STARTDATE"));
+            cause.setStateChangeDate(rs.getDate("STATECHANGEDATE"));
+            cause.setEstimateDate(rs.getDate("ESTIMATEDATE"));
+
         }
 
     }
@@ -123,6 +133,7 @@ public class CauseServiceImpl implements CauseService {
             step.setOperation(rs.getString("ID_OPERATION"));
             step.setDateBegin(rs.getDate("DATEBEGIN"));
             step.setDateEnd(rs.getDate("DATEEND"));
+            step.setEstimateDate(rs.getDate("ESTIMATEDATE"));
             step.setState(rs.getInt("STATE"));
             step.setResolution(rs.getString("RESOLUTION"));
             steps.add(step);
@@ -134,4 +145,6 @@ public class CauseServiceImpl implements CauseService {
             cause.setCurStep(steps.get(steps.size()-1));
         }
     }
+
+
 }

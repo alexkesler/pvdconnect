@@ -28,6 +28,11 @@ public class CauseController {
         log.info("Recieve Cause request " + recordDTO.getRegnum());
         CauseDTO causeDTO = CauseTransform.transform(causeService.getCauseByRecord(RecordTransform.transform(recordDTO)));
         log.info("Send Cause " + causeDTO.getRecordDTO().getRegnum());
+        log.debug("Cause: " + causeDTO.getRecordDTO().getRegnum());
+        log.debug("  Regdate: " + causeDTO.getRecordDTO().getRegdate());
+        log.debug("  State: " + causeDTO.getStateString());
+        log.debug("  StatusMD: " + causeDTO.getStatusMdString());
+        log.debug("  Purpose: " + causeDTO.getPurposeString());
         return causeDTO;
 
     }

@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import org.kesler.client.gui.cause.CauseController;
 import org.kesler.client.gui.check.ChecksController;
 import org.kesler.client.gui.main.MainController;
-import org.kesler.client.gui.WelcomeController;
 import org.kesler.client.gui.branch.BranchController;
 import org.kesler.client.gui.branch.BranchListController;
 import org.kesler.client.service.*;
@@ -68,23 +67,6 @@ public class SimpleRestAppFactory {
         return restTemplate;
     }
 
-    /**
-     * The WelcomeController is wired to the Welcome view (provided by /resources/fxml/Welcome.fxml). When the FXML
-     * file is loaded both the Controller and the View are instantiated. We return the Controller here as it is the
-     * more interesting thing to interact with. The Controller has a reference to it's view (i.e. the root of the
-     * scene graph loaded from the FXML file) and you can get access to the view from it.
-     * <p/>
-     * Note that the WelcomeController defines a reference to the WelcomeRestService using the @Autowired annotation. As
-     * a result the WelcomeRestService created by the method below will be automatically injected into this repository when
-     * it is created.
-     *
-     * @return the fully loaded WelcomeController (with attached Welcome view) ready for use in a Scene.
-     */
-    @Bean
-    public WelcomeController welcomeController() {
-        return loadController("/fxml/Welcome.fxml");
-    }
-
     @Bean
     public MainController mainController() {
         MainController mainController = loadController("/fxml/Main.fxml");
@@ -122,11 +104,7 @@ public class SimpleRestAppFactory {
      *
      * @return the WelcomeRestService which provides a convenient facade for calling server side REST calls.
      */
-    @Bean
-    public WelcomeRestService welcomeRestService() {
-        // env.getProperty will perform a lookup on our properties file using the key 'server.url'
-        return new WelcomeRestService(env.getProperty("server.url"));
-    }
+
 
     @Bean
     public BranchService branchService() {
