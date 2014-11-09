@@ -5,7 +5,7 @@
 
 
     <bean id="checkRepository" class="org.kesler.server.repository.support.CheckRepositorySimpleImpl"/>
-    <bean id="branchRepository" class="org.kesler.server.repository.support.BranchRepositorySimpleImpl"/>
+    <bean id="branchRepository" class="org.kesler.server.repository.support.BranchRepositoryHibernateImpl"/>
 
 
 </beans>
