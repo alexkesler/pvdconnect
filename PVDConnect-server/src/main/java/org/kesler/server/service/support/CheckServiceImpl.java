@@ -81,14 +81,11 @@ public class CheckServiceImpl implements CheckService {
         try {
             log.debug("Reading count");
             message = "Считаем кол-во работы по филиалу "+ branch.getName();
-            ResultSet rs = stmt.executeQuery(countQuery);
-            try {
+            try (ResultSet rs = stmt.executeQuery(countQuery)) {
                 rs.next();
                 total = rs.getLong("cnt");
                 log.debug("In rs " + total + " records");
 
-            } finally {
-                rs.close();
             }
         } finally {
             stmt.close();
@@ -97,14 +94,11 @@ public class CheckServiceImpl implements CheckService {
         stmt = conn.createStatement();
         try {
             message = "Получаем данные по филиалу " + branch.getName();
-            ResultSet rs = stmt.executeQuery(query);
-            try {
+            try (ResultSet rs = stmt.executeQuery(query)) {
                 log.debug("Processing >>>");
                 processRs(rs, check);
                 log.debug("Processing complete");
                 message = "Готово";
-            } finally {
-                rs.close();
             }
         } finally {
             stmt.close();

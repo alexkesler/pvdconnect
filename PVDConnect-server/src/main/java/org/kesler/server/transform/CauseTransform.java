@@ -2,7 +2,7 @@ package org.kesler.server.transform;
 
 import org.kesler.common.CauseDTO;
 import org.kesler.server.domain.Cause;
-import org.kesler.server.domain.cause.Applicator;
+import org.kesler.server.domain.cause.Applicant;
 import org.kesler.server.domain.cause.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,8 @@ public abstract class CauseTransform {
         causeDTO.setStateChangeDate(cause.getStateChangeDate());
 
         List<String> applicators = new ArrayList<String>();
-        for (Applicator applicator:cause.getApplicators()) {
-            applicators.add(applicator.getCommonName());
+        for (Applicant applicant :cause.getApplicants()) {
+            applicators.add(applicant.getCommonName());
         }
 
         causeDTO.setApplicators(applicators);
@@ -104,6 +104,9 @@ public abstract class CauseTransform {
                 break;
             case "007":
                 statusMdString = "Завершено";
+                break;
+            case "008":
+                statusMdString = "Завершено отказом";
                 break;
             case "009":
                 statusMdString = "Отказано в обработке";
