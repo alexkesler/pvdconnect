@@ -1,7 +1,7 @@
 package org.kesler.server.domain;
 
 
-import org.kesler.server.domain.cause.Applicator;
+import org.kesler.server.domain.cause.Applicant;
 import org.kesler.server.domain.cause.Obj;
 import org.kesler.server.domain.cause.Step;
 
@@ -18,7 +18,7 @@ public class Cause {
     private Record record;
     private Integer purpose;
     private String purposeString;
-    private Collection<Applicator> applicators;
+    private Collection<Applicant> applicants;
     private Obj obj;
     private Collection<Step> steps;
     private Step curStep;
@@ -31,7 +31,7 @@ public class Cause {
     private Date estimateDate;
 
     public Cause() {
-        applicators = new ArrayList<Applicator>();
+        applicants = new ArrayList<Applicant>();
         steps = new ArrayList<Step>();
     }
 
@@ -46,7 +46,7 @@ public class Cause {
     public Integer getPurpose() { return purpose; }
     public void setPurpose(Integer purpose) { this.purpose = purpose; }
 
-    public Collection<Applicator> getApplicators() { return applicators; }
+    public Collection<Applicant> getApplicants() { return applicants; }
 
     public Obj getObj() { return obj; }
     public void setObj(Obj obj) { this.obj = obj; }

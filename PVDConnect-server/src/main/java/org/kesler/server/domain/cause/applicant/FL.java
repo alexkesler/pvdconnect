@@ -1,4 +1,4 @@
-package org.kesler.server.domain.cause.applicator;
+package org.kesler.server.domain.cause.applicant;
 
 public class FL {
     private String firstName;

@@ -1,6 +1,6 @@
 package org.kesler.server.domain.cause;
 
-public abstract class Applicator {
+public abstract class Applicant {
 
     public abstract String getCommonName();
 
