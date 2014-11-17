@@ -21,7 +21,7 @@
 
     <groupId>org.kesler</groupId>
     <artifactId>PVDConnect-server</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
     <packaging>war</packaging>
 
     <build>
