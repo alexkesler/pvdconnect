@@ -3,8 +3,13 @@ package org.kesler.server.service.support;
 import org.kesler.server.domain.Branch;
 import org.kesler.server.domain.Cause;
 import org.kesler.server.domain.Record;
+import org.kesler.server.domain.cause.Applicant;
 import org.kesler.server.domain.cause.Obj;
 import org.kesler.server.domain.cause.Step;
+import org.kesler.server.domain.cause.applicant.ApplicantFL;
+import org.kesler.server.domain.cause.applicant.ApplicantUL;
+import org.kesler.server.domain.cause.applicant.FL;
+import org.kesler.server.domain.cause.applicant.UL;
 import org.kesler.server.service.CauseService;
 import org.kesler.server.util.OracleUtil;
 import org.slf4j.Logger;
@@ -34,7 +39,14 @@ public class CauseServiceImpl implements CauseService {
                 "WHERE C.ID='" + cause.getCauseId() + "'";
 
 
-        String applicatorsQuery = "";
+        String applicantsQuery = "SELECT SA.ID_CLSTYPE AS A_CLSTYPE, " +
+                "SA.SURNAME AS A_SURNAME, SA.FIRSTNAME AS A_FIRSTNAME, SA.PATRONYMIC AS A_PATRONYMIC, SA.SHORTNAME AS A_SHORTNAME, " +
+                "SR.ID AS R_ID, SR.SURNAME AS R_SURNAME, SR.FIRSTNAME AS R_FIRSTNAME, SR.PATRONYMIC AS R_PATRONYMIC " +
+                "FROM DPS$D_CAUSE C " +
+                "LEFT JOIN DPS$APPLICANT A ON A.ID_CAUSE=C.ID " +
+                "LEFT JOIN DPS$SUBJECT SA ON SA.ID=A.ID_SUBJECT " +
+                "LEFT JOIN DPS$SUBJECT SR ON SR.ID=A.ID_AGENT " +
+                "WHERE C.ID='" + cause.getCauseId() + "'";
 
         String stepsQuery = "SELECT S.RESOLUTION, S.ID_OPERATION, S.DATEBEGIN, S.DATEEND, S.ESTIMATEDATE, S.STATE " +
                 "FROM DPS$STEP S " +
@@ -60,38 +72,28 @@ public class CauseServiceImpl implements CauseService {
 
         try {
 
-            Statement stmt = conn.createStatement();
-
-            try {
-                ResultSet rs = stmt.executeQuery(objQuery);
-                try {
+            try (Statement stmt = conn.createStatement()) {
+                try (ResultSet rs = stmt.executeQuery(objQuery)) {
                     log.debug("Processing obj >>>");
                     processObjRs(rs, cause);
                     log.debug("Processing obj complete");
-
-                } finally {
-                    rs.close();
                 }
-            } finally {
-                stmt.close();
             }
 
-            ///
+            try (Statement stmt = conn.createStatement()){
+                try (ResultSet rs = stmt.executeQuery(applicantsQuery)) {
+                    log.debug("Processing applicants >>>");
+                    processApplicantsRs(rs, cause);
+                    log.debug("Processing applicants complete");
+                }
+            }
 
-            stmt = conn.createStatement();
-
-            try {
-                ResultSet rs = stmt.executeQuery(stepsQuery);
-                try {
+            try (Statement stmt = conn.createStatement()){
+                try (ResultSet rs = stmt.executeQuery(stepsQuery)) {
                     log.debug("Processing steps >>>");
                     processStepsRs(rs, cause);
                     log.debug("Processing steps complete");
-
-                } finally {
-                    rs.close();
                 }
-            } finally {
-                stmt.close();
             }
 
 
@@ -122,8 +124,66 @@ public class CauseServiceImpl implements CauseService {
 
     }
 
-    private void processApplicatorsRs(ResultSet rs, Cause cause) throws SQLException {
+    private void processApplicantsRs(ResultSet rs, Cause cause) throws SQLException {
 
+        List<Applicant> applicants = new ArrayList<>();
+
+        while (rs.next()) {
+            String clstype = rs.getString("A_CLSTYPE");
+            String cls = clstype.substring(0,3);
+
+            Applicant applicant=null;
+
+            FL repres = null;
+            String represId = rs.getString("R_ID");
+            if (represId != null) {
+                repres = new FL();
+
+                String represSurName = rs.getString("R_SURNAME");
+                String represFirstName = rs.getString("R_FIRSTNAME");
+                String represPatronymic = rs.getString("R_PATRONYMIC");
+
+                repres.setSurName(represSurName);
+                repres.setFirstName(represFirstName);
+                repres.setParentName(represPatronymic);
+            }
+
+
+            if (cls.equals("7.3")) { // физ лицо
+                ApplicantFL applicantFL = new ApplicantFL();
+                FL subject = new FL();
+                String subjectSurName = rs.getString("A_SURNAME");
+                String subjectFirstName = rs.getString("A_FIRSTNAME");
+                String subjectPatronymic = rs.getString("A_PATRONYMIC");
+
+                subject.setFirstName(subjectFirstName);
+                subject.setParentName(subjectPatronymic);
+                subject.setSurName(subjectSurName);
+
+                applicantFL.setFl(subject);
+
+                applicantFL.setRepres(repres);
+
+                applicant = applicantFL;
+            } else if (cls.equals("7.1") || cls.equals("7.2")) { // юр лицо или огв
+                ApplicantUL applicantUL = new ApplicantUL();
+
+                UL subject = new UL();
+                String subjectShortName = rs.getString("A_SHORTNAME");
+                subject.setShortName(subjectShortName);
+
+                applicantUL.setUl(subject);
+
+                applicantUL.setRepres(repres);
+
+                applicant = applicantUL;
+            }
+
+
+            applicants.add(applicant);
+        }
+
+        cause.getApplicants().addAll(applicants);
     }
 
     private void processStepsRs(ResultSet rs, Cause cause) throws SQLException {

@@ -1,8 +1,8 @@
-package org.kesler.server.domain.cause.applicator;
+package org.kesler.server.domain.cause.applicant;
 
-import org.kesler.server.domain.cause.Applicator;
+import org.kesler.server.domain.cause.Applicant;
 
-public class ApplicatorUL extends Applicator {
+public class ApplicantUL extends Applicant {
     private UL ul;
     private FL repres;
 
