@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.controlsfx.control.action.Action;
@@ -38,6 +39,32 @@ public abstract class AbstractController {
             stage.initOwner(owner);
             stage.setScene(new Scene(root));
         }
+        stage.show();
+        updateContent();
+    }
+
+    public void show(Window owner, String title) {
+        log.info("Show view");
+        if (stage==null) {
+            stage = new Stage();
+            stage.initOwner(owner);
+            stage.setScene(new Scene(root));
+        }
+        stage.setTitle(title);
+        stage.show();
+        updateContent();
+    }
+
+    public void show(Window owner, String title, Image icon) {
+        log.info("Show view");
+        if (stage==null) {
+            stage = new Stage();
+            stage.initOwner(owner);
+            stage.setScene(new Scene(root));
+        }
+        stage.setTitle(title);
+        stage.getIcons().clear();
+        stage.getIcons().addAll(icon);
         stage.show();
         updateContent();
     }

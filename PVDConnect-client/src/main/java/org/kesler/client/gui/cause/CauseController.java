@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Window;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import org.kesler.client.domain.Cause;
@@ -53,6 +55,12 @@ public class CauseController extends AbstractController{
 
     public void initRecord(Record record) {
         this.record = record;
+    }
+
+    @Override
+    public void show(Window owner) {
+        Image icon = new Image(CauseController.class.getResourceAsStream("/images/book_open2.png"));
+        super.show(owner, "Дело ПК ПВД", icon);
     }
 
     @Override
