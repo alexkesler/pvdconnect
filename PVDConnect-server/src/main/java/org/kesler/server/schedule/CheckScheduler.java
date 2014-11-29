@@ -14,7 +14,7 @@ public class CheckScheduler {
     @Autowired
     CheckService checkService;
 
-    @Scheduled(cron = "0 0 21 * * *")
+    @Scheduled(cron = "0 0 7 * * *")
 //    @Scheduled(cron = "0 */1 * * * *")
     public void doCheck() {
         log.info("Run scheduled CheckTask");
