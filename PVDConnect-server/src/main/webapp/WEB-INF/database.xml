@@ -16,11 +16,17 @@
         <property name="password" value="Qwerty123"/>
     </bean>
 
+    <bean id="h2DataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:pvdconnect;INIT=create schema if not exists pvdconnect"/>
+        <property name="username" value="pvdoper"/>
+        <property name="password" value="Qwerty123"/>
+    </bean>
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="mysqlDataSource"/>
+        <property name="dataSource" ref="h2DataSource"/>
         <property name="hibernateProperties">
             <value>
-                hibernate.dialect=org.hibernate.dialect.MySQLDialect
                 hibernate.hbm2ddl.auto=update
                 hibernate.show_sql=false
             </value>
@@ -29,6 +35,12 @@
             <list>
                 <value>
                     branch.hbm.xml
+                </value>
+                <value>
+                    check.hbm.xml
+                </value>
+                <value>
+                    record.hbm.xml
                 </value>
             </list>
         </property>

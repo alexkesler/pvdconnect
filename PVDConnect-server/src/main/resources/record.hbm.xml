@@ -8,7 +8,7 @@
         <id name="id" column="ID">
             <generator class="native"/>
         </id>
-        <many-to-one name="branch" column="BranchID" not-null="true" />
+        <many-to-one name="branch" column="BranchID" not-null="true" lazy="false" />
         <property name="causePvdId" column="CausePVDID"/>
         <property name="regnum" column="Regnum"/>
         <property name="regdate" type="timestamp" column="Regdate"/>

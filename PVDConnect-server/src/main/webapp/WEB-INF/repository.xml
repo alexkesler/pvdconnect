@@ -6,6 +6,7 @@
 
     <bean id="checkRepository" class="org.kesler.server.repository.support.CheckRepositoryHibernateImpl"/>
     <bean id="branchRepository" class="org.kesler.server.repository.support.BranchRepositoryHibernateImpl"/>
+    <bean id="recordRepository" class="org.kesler.server.repository.support.RecordRepositoryHibernateImpl"/>
 
 
 </beans>

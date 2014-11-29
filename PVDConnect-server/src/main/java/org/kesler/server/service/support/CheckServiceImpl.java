@@ -105,8 +105,13 @@ public class CheckServiceImpl implements CheckService {
         }
 
         OracleUtil.closeConnection(conn);
-        log.info("Check branch " + branch.getName() + " complete: " + check.getRecords().size() + " cases.");
+        log.info("Check branch " + branch.getName() + " complete: " + check.getRecordsSize()+ " cases.");
+
+        message="Записываем в базу данных";
+        log.info("Saving check to DB ...");
         checkRepository.addCheck(check);
+        log.info("Saving check to DB complete.");
+        message="Готово";
 
         current = 0;
         total = 0;
@@ -127,6 +132,7 @@ public class CheckServiceImpl implements CheckService {
             check.addRecord(record);
             current++;
         }
+        check.setRecordsSize(check.getRecords().size());
         check.setCheckDate(new Date());
     }
 

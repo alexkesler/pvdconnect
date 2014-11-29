@@ -5,6 +5,7 @@ import org.kesler.server.domain.Check;
 import org.kesler.common.RecordDTO;
 import org.kesler.server.domain.Record;
 import org.kesler.server.repository.CheckRepository;
+import org.kesler.server.repository.RecordRepository;
 import org.kesler.server.transform.RecordTransform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,23 +22,28 @@ import java.util.List;
 @RequestMapping("/records")
 public class RecordsController {
 
-    private final CheckRepository checkRepository;
+    private final RecordRepository recordRepository;
 
     @Autowired
-    public RecordsController(CheckRepository checkRepository) {
-        this.checkRepository = checkRepository;
+    public RecordsController(RecordRepository recordRepository) {
+        this.recordRepository = recordRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     RecordsDTO getRecordsByCode(@RequestParam String code) {
         List<RecordDTO> recordDTOList = new ArrayList<RecordDTO>();
-        Collection<Check> checks = checkRepository.getAllChecks();
-        for (Check check:checks) {
-            for(Record record :check.getRecords()) {
-                if (record.getRegnum().contains(code))
-                    recordDTOList.add(RecordTransform.transform(record));
-            }
+//        Collection<Check> checks = checkRepository.getAllChecks();
+//        for (Check check:checks) {
+//            for(Record record :check.getRecords()) {
+//                if (record.getRegnum().contains(code))
+//                    recordDTOList.add(RecordTransform.transform(record));
+//            }
+//        }
+
+        Collection<Record> records = recordRepository.getRecordsByRegnum(code);
+        for (Record record:records) {
+            recordDTOList.add(RecordTransform.transform(record));
         }
 
         return new RecordsDTO(recordDTOList);
