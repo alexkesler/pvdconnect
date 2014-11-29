@@ -7,10 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
-@Component
+@Repository
 public class BranchRepositoryHibernateImpl implements BranchRepository {
 
     private static final Logger log = LoggerFactory.getLogger(BranchRepositoryHibernateImpl.class);

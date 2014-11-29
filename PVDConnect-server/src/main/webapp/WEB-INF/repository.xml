@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="checkRepository" class="org.kesler.server.repository.support.CheckRepositorySimpleImpl"/>
+    <bean id="checkRepository" class="org.kesler.server.repository.support.CheckRepositoryHibernateImpl"/>
     <bean id="branchRepository" class="org.kesler.server.repository.support.BranchRepositoryHibernateImpl"/>
 
 
