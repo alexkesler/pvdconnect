@@ -1,6 +1,8 @@
 package org.kesler.server.repository.support;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.kesler.server.domain.Branch;
 import org.kesler.server.domain.Check;
 import org.kesler.server.repository.CheckRepository;
 import org.slf4j.Logger;
@@ -25,7 +27,7 @@ public class CheckRepositoryHibernateImpl implements CheckRepository {
                     .saveOrUpdate(check);
         } catch (Exception ex) {
             log.error("Error saving Check " + ex, ex);
-            throw new RuntimeException("Error saving Branch",ex);
+            throw new RuntimeException("Error saving Check",ex);
         }
 
     }
@@ -33,10 +35,20 @@ public class CheckRepositoryHibernateImpl implements CheckRepository {
 
     @Override
     public Collection<Check> getAllChecks() {
+        log.info("Getting all checks");
         return this.sessionFactory.getCurrentSession()
                 .createCriteria(Check.class)
                 .list();
     }
 
-
+    @Override
+    public Check getCheckByBranch(Branch branch) {
+        log.info("Getting check for branch " + branch.getName());
+        Collection<Check> checks = this.sessionFactory.getCurrentSession()
+                .createCriteria(Check.class)
+                .add(Restrictions.eq("branch",branch))
+                .list();
+        if (checks.size()==0) return null;
+        else return checks.iterator().next();
+    }
 }

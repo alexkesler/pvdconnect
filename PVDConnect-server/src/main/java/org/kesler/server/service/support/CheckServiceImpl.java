@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -105,7 +106,7 @@ public class CheckServiceImpl implements CheckService {
         }
 
         OracleUtil.closeConnection(conn);
-        log.info("Check branch " + branch.getName() + " complete: " + check.getRecordsSize()+ " cases.");
+        log.info("Check branch " + branch.getName() + " complete: " + check.getRecordsSize() + " cases.");
 
         message="Записываем в базу данных";
         log.info("Saving check to DB ...");
@@ -137,10 +138,8 @@ public class CheckServiceImpl implements CheckService {
     }
 
     private Check findCheckForBranch(Branch branch) {
-        for (Check check:checkRepository.getAllChecks()) {
-            if(branch.equals(check.getBranch())) return check;
-        }
-        return null;
+
+        return checkRepository.getCheckByBranch(branch);
     }
 
     @Override

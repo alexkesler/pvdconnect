@@ -1,5 +1,6 @@
 package org.kesler.server.repository.support;
 
+import org.kesler.server.domain.Branch;
 import org.kesler.server.domain.Check;
 import org.kesler.server.repository.CheckRepository;
 
@@ -26,5 +27,10 @@ public class CheckRepositorySimpleImpl implements CheckRepository {
     @Override
     public Collection<Check> getAllChecks() {
         return checks;
+    }
+
+    @Override
+    public Check getCheckByBranch(Branch branch) {
+        return null;
     }
 }

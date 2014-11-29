@@ -35,6 +35,7 @@ public class BranchRepositoryHibernateImpl implements BranchRepository {
 
     @Override
     public Collection<Branch> getAllBranches() {
+        log.info("Getting all branches");
         return this.sessionFactory.getCurrentSession()
                 .createCriteria(Branch.class)
                 .list();
@@ -47,12 +48,14 @@ public class BranchRepositoryHibernateImpl implements BranchRepository {
 
     @Override
     public void updateBranch(Branch branch) {
+        log.info("Update branch " + branch.getName());
         this.sessionFactory.getCurrentSession()
                 .update(branch);
     }
 
     @Override
     public void removeBranch(Branch branch) {
+        log.info("Remove branch " + branch.getName());
         this.sessionFactory.getCurrentSession()
                 .delete(branch);
 

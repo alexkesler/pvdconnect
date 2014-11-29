@@ -7,6 +7,7 @@ import java.util.Date;
 public class Record {
     private Long id;
     private Branch branch;
+    private Check check;
     private String causePvdId;
     private String regnum;
     private Date regdate;
@@ -16,6 +17,9 @@ public class Record {
 
     public Branch getBranch() { return branch; }
     public void setBranch(Branch branch) { this.branch = branch; }
+
+    public Check getCheck() { return check; }
+    public void setCheck(Check check) { this.check = check; }
 
     public String getBranchName() {
         return branch ==null?"": branch.getName();

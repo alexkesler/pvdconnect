@@ -10,7 +10,7 @@
         </id>
         <property name="uuid"/>
         <many-to-one name="branch" class="Branch" column="BranchID" not-null="true" lazy="false"/>
-        <set name="records" cascade="all">
+        <set name="records" cascade="all" lazy="false">
             <key column="CheckID" />
             <one-to-many class="Record" />
         </set>
