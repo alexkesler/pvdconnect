@@ -57,32 +57,14 @@ public class BranchListController extends AbstractController{
     @Override
     public void updateContent() {
         observableBranches.clear();
-        Task<Collection<Branch>> updateTask = new Task<Collection<Branch>>() {
-            @Override
-            protected Collection<Branch> call() throws Exception {
-                log.debug("Updating branches...");
-                return branchService.getAllBranches();
-            }
 
-            @Override
-            protected void succeeded() {
-                Collection<Branch> branches = getValue();
-                log.debug("Server return " + branches.size() + " branches");
-                observableBranches.addAll(branches);
-            }
+        UpdateListTask updateListTask = new UpdateListTask();
 
-            @Override
-            protected void failed() {
-                Throwable exception = getException();
-                log.error("Error updating: " + exception, exception);
-            }
-        };
-
-        BooleanBinding runningBinding = updateTask.stateProperty().isEqualTo(Task.State.RUNNING);
+        BooleanBinding runningBinding = updateListTask.stateProperty().isEqualTo(Task.State.RUNNING);
 
         updateProgressIndicator.visibleProperty().bind(runningBinding);
 
-        new Thread(updateTask).start();
+        new Thread(updateListTask).start();
 
     }
 
@@ -116,15 +98,20 @@ public class BranchListController extends AbstractController{
     private void addBranch() {
         log.info("Opening add Branch dialog");
 
-        Branch newBranch = new Branch();
+        final Branch newBranch = new Branch();
 
         branchController.initBranch(newBranch);
         branchController.showAndWait(stage);
         if (branchController.getResult() == AbstractController.Result.OK) {
             log.info("Saving Branch: " + newBranch.getName());
-            observableBranches.add(newBranch);
-            branchService.addBranch(newBranch);
-            branchListView.getSelectionModel().select(observableBranches.indexOf(newBranch));
+
+            AddTask addTask = new AddTask(newBranch);
+
+            BooleanBinding runningBinding = addTask.stateProperty().isEqualTo(Task.State.RUNNING);
+
+            updateProgressIndicator.visibleProperty().bind(runningBinding);
+
+            new Thread(addTask).start();
         }
 
     }
@@ -145,9 +132,11 @@ public class BranchListController extends AbstractController{
         branchController.initBranch(selectedBranch);
         branchController.showAndWait(stage);
         if (branchController.getResult() == AbstractController.Result.OK) {
-            branchService.updateBranch(selectedBranch);
-            FXUtils.triggerUpdateListView(branchListView, selectedBranch, selectedIndex);
-            branchListView.getSelectionModel().select(selectedIndex);
+            UpdateTask updateTask = new UpdateTask(selectedBranch);
+            BooleanBinding runningBinding = updateTask.stateProperty().isEqualTo(Task.State.RUNNING);
+            updateProgressIndicator.visibleProperty().bind(runningBinding);
+
+            new Thread(updateTask).start();
         }
 
     }
@@ -170,11 +159,126 @@ public class BranchListController extends AbstractController{
                 .message("Удалить выбранный филиал: " + selectedBranch.getName())
                 .showConfirm();
         if (response == Dialog.ACTION_YES) {
-            observableBranches.remove(selectedBranch);
-            branchService.removeBranch(selectedBranch);
+            RemoveTask removeTask = new RemoveTask(selectedBranch);
+            BooleanBinding runningBinding = removeTask.stateProperty().isEqualTo(Task.State.RUNNING);
+            updateProgressIndicator.visibleProperty().bind(runningBinding);
+
+            new Thread(removeTask).start();
         }
     }
 
+    // Класс для добавления в отдельном потоке
+    class AddTask extends Task<Void> {
+        private final Branch newBranch;
+        AddTask(Branch newBranch) {
+            this.newBranch = newBranch;
+        }
+        @Override
+        protected Void call() throws Exception {
+            branchService.addBranch(newBranch);
+            return null;
+        }
+
+        @Override
+        protected void succeeded() {
+            observableBranches.add(newBranch);
+            branchListView.getSelectionModel().select(newBranch);
+        }
+
+        @Override
+        protected void failed() {
+            Throwable exception = getException();
+            log.error("Error adding: " + exception, exception);
+            Dialogs.create()
+                    .owner(stage)
+                    .title("Ошибка")
+                    .showException(exception);
+        }
+    }
+
+    // Задача обновления филиала в отдельном потоке
+    class UpdateTask extends Task<Void> {
+        private final Branch branch;
+        UpdateTask(Branch branch) {
+            this.branch = branch;
+        }
+        @Override
+        protected Void call() throws Exception {
+            branchService.updateBranch(branch);
+            return null;
+        }
+
+        @Override
+        protected void succeeded() {
+            FXUtils.triggerUpdateListView(branchListView, branch);
+            branchListView.getSelectionModel().select(branch);
+        }
+
+        @Override
+        protected void failed() {
+            Throwable exception = getException();
+            log.error("Error updating: " + exception, exception);
+            Dialogs.create()
+                    .owner(stage)
+                    .title("Ошибка")
+                    .showException(exception);
+        }
+    }
+
+    // Задача удаления филиала в отдельном потоке
+    class RemoveTask extends Task<Void> {
+        private final Branch branch;
+        RemoveTask(Branch branch) {
+            this.branch = branch;
+        }
+        @Override
+        protected Void call() throws Exception {
+            branchService.removeBranch(branch);
+            return null;
+        }
+
+        @Override
+        protected void succeeded() {
+            observableBranches.removeAll(branch);
+        }
+
+        @Override
+        protected void failed() {
+            Throwable exception = getException();
+            log.error("Error removing: " + exception, exception);
+            Dialogs.create()
+                    .owner(stage)
+                    .title("Ошибка")
+                    .showException(exception);
+        }
+    }
+
+    // Класс для обновления списка в отдельном потоке
+
+    class UpdateListTask extends Task<Collection<Branch>> {
+        @Override
+        protected Collection<Branch> call() throws Exception {
+            log.debug("Updating branches...");
+            return branchService.getAllBranches();
+        }
+
+        @Override
+        protected void succeeded() {
+            Collection<Branch> branches = getValue();
+            log.debug("Server return " + branches.size() + " branches");
+            observableBranches.addAll(branches);
+        }
+
+        @Override
+        protected void failed() {
+            Throwable exception = getException();
+            log.error("Error updating: " + exception, exception);
+            Dialogs.create()
+                    .owner(stage)
+                    .title("Ошибка")
+                    .showException(exception);
+        }
+    }
 
     // Вспомогательные классы для списка сотрудников
     class CertRightListCell extends ListCell<Branch> {
