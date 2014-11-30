@@ -53,12 +53,8 @@ public class CauseController extends AbstractController{
         root.prefWidth(900);
     }
 
-    public void initRecord(Record record) {
+    public void show(Window owner, Record record) {
         this.record = record;
-    }
-
-    @Override
-    public void show(Window owner) {
         Image icon = new Image(CauseController.class.getResourceAsStream("/images/book_open2.png"));
         super.show(owner, "Дело ПК ПВД", icon);
     }

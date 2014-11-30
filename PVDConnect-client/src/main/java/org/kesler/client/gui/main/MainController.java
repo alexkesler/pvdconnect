@@ -2,12 +2,15 @@ package org.kesler.client.gui.main;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.controlsfx.dialog.*;
+import org.controlsfx.dialog.Dialog;
 import org.kesler.client.domain.Record;
 import org.kesler.client.gui.branch.BranchListController;
 import org.kesler.client.gui.cause.CauseController;
@@ -38,6 +41,8 @@ public class MainController {
 
     private boolean config = false;
 
+    private final ObservableList<Record> observableRecords = FXCollections.observableArrayList();
+
     @Autowired
     private RecordService recordService;
 
@@ -54,6 +59,11 @@ public class MainController {
     private CauseController causeController;
 
     public Parent getRoot() {return root;}
+
+    @FXML
+    protected void initialize() {
+        recordTableView.setItems(observableRecords);
+    }
 
     public void setConfig(boolean config) {
         this.config = config;
@@ -89,8 +99,15 @@ public class MainController {
     protected void handleRecordTableViewMouseClicked(MouseEvent ev) {
         if (ev.getClickCount()==2) {
             Record selectedRecord = recordTableView.getSelectionModel().getSelectedItem();
-            causeController.initRecord(selectedRecord);
-            causeController.show(root.getScene().getWindow());
+            if (selectedRecord!=null) {
+                causeController.show(root.getScene().getWindow(), selectedRecord);
+            } else {
+                Dialogs.create()
+                        .owner(root.getScene().getWindow())
+                        .title("Внимание")
+                        .message("НИчего не выбрано")
+                        .showWarning();
+            }
         }
     }
 
@@ -108,7 +125,8 @@ public class MainController {
             protected void succeeded() {
                 Collection<Record> records = getValue();
                 log.debug("Server return " + records.size() + " records");
-                recordTableView.setItems(FXCollections.observableArrayList(records));
+                observableRecords.clear();
+                observableRecords.addAll(records);
             }
 
             @Override
