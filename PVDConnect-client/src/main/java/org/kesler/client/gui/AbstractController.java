@@ -44,7 +44,7 @@ public abstract class AbstractController {
     }
 
     public void show(Window owner, String title) {
-        log.info("Show view");
+        log.info("Show view with title: " + title);
         if (stage==null) {
             stage = new Stage();
             stage.initOwner(owner);
@@ -56,7 +56,7 @@ public abstract class AbstractController {
     }
 
     public void show(Window owner, String title, Image icon) {
-        log.info("Show view");
+        log.info("Show view with title " + title + " and icon");
         if (stage==null) {
             stage = new Stage();
             stage.initOwner(owner);
