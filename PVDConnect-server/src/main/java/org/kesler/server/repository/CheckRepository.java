@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface CheckRepository {
 
-    public void addCheck(Check check);
+    public void saveCheck(Check check);
     public Collection<Check> getAllChecks();
     public Check getCheckByBranch(Branch branch);
 

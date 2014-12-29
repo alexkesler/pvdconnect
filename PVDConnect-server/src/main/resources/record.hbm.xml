@@ -9,6 +9,7 @@
             <generator class="native"/>
         </id>
         <many-to-one name="branch" column="BranchID" not-null="true" lazy="false" />
+        <many-to-one name="check" column="CheckID" not-null="true" lazy="false" />
         <property name="causePvdId" column="CausePVDID"/>
         <property name="regnum" column="Regnum"/>
         <property name="regdate" type="timestamp" column="Regdate"/>

@@ -20,7 +20,7 @@ public class CheckRepositoryHibernateImpl implements CheckRepository {
     private SessionFactory sessionFactory;
 
     @Override
-    public void addCheck(Check check) {
+    public void saveCheck(Check check) {
         log.info("Adding check for branch " + check.getBranchName());
         try {
             this.sessionFactory.getCurrentSession()
