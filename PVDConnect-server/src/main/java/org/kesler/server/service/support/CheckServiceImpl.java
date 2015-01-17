@@ -45,14 +45,19 @@ public class CheckServiceImpl implements CheckService {
         for(Branch branch:branches) {
             log.info("Checking branch: " + branch.getName());
             Check check = findCheckForBranch(branch);
+
+
             if (check==null) check = new Check(branch);
+            check.setLastSuccess(false);
+            checkRepository.saveCheck(check);
+
             try {
                 recheck(check);
                 check.setLastSuccess(true);
 
             } catch (SQLException sqle) {
                 log.error("Error connecting PVD server: " + branch.getPvdIp() + " - " + sqle, sqle);
-                check.setLastSuccess(false);
+
                 message="Ошибка получения данных";
             }
 
