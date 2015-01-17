@@ -3,6 +3,7 @@ package org.kesler.client.gui.branch;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +51,8 @@ public class BranchListController extends AbstractController{
             }
         });
         observableBranches = FXCollections.observableArrayList();
-        branchListView.setItems(observableBranches);
+        SortedList<Branch> sortedBranches = new SortedList<Branch>(observableBranches, new BranchComparator());
+        branchListView.setItems(sortedBranches);
 
     }
 
@@ -117,8 +119,8 @@ public class BranchListController extends AbstractController{
     }
 
     private void editBranch() {
-        int selectedIndex = branchListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex<0) {
+        Branch selectedBranch = branchListView.getSelectionModel().getSelectedItem();
+        if (selectedBranch==null) {
             Dialogs.create()
                     .owner(root.getScene().getWindow())
                     .title("Внимание")
@@ -126,8 +128,6 @@ public class BranchListController extends AbstractController{
                     .showWarning();
             return;
         }
-
-        Branch selectedBranch = observableBranches.get(selectedIndex);
 
         branchController.initBranch(selectedBranch);
         branchController.showAndWait(stage);
@@ -285,7 +285,7 @@ public class BranchListController extends AbstractController{
         @Override
         protected void updateItem(Branch item, boolean empty) {
             super.updateItem(item, empty);
-            setText(item==null?"":(item.getName()==null?"":item.getName()));
+            setText(item==null?"":item.getCode()+" - "+item.getName());
         }
     }
 
