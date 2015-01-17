@@ -27,6 +27,7 @@
         <property name="dataSource" ref="mysqlDataSource"/>
         <property name="hibernateProperties">
             <value>
+                <!--hibernate.jdbc.batch_size=20-->
                 hibernate.hbm2ddl.auto=update
                 hibernate.show_sql=false
             </value>
@@ -60,9 +61,9 @@
 
 
     <aop:config>
-        <aop:pointcut id="branchRepositoryPointCut"
+        <aop:pointcut id="repositoryPointCut"
                       expression="execution(* org.kesler.server.repository.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="branchRepositoryPointCut" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="repositoryPointCut" />
     </aop:config>
 
 </beans>

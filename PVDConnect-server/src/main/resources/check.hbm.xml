@@ -10,12 +10,9 @@
         </id>
         <property name="uuid"/>
         <many-to-one name="branch" class="Branch" column="BranchID" not-null="true" lazy="false"/>
-        <set name="records" cascade="all" lazy="false">
-            <key column="CheckID" />
-            <one-to-many class="Record" />
-        </set>
         <property name="recordsSize" />
         <property name="checkDate" type="timestamp" column="CheckDate" />
+        <property name="lastSuccess" column="LastSuccess" />
 
     </class>
 </hibernate-mapping>

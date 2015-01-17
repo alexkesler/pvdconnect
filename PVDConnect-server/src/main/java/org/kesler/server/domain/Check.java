@@ -9,15 +9,14 @@ public class Check {
     private Long id;
     private String uuid = UUID.randomUUID().toString();
     private Branch branch;
-    private Set<Record> records;
     private Integer recordsSize=0;
     private Date checkDate;
+    public Boolean lastSuccess;
 
     protected Check() {}
 
     public Check(Branch branch) {
         this.branch = branch;
-        records = new HashSet<Record>();
     }
 
     public Long getId() { return id; }
@@ -52,13 +51,6 @@ public class Check {
         return recordsSize;
     }
 
-    public Collection<Record> getRecords() {
-        return records;
-    }
-
-    public void setRecords(Set<Record> records) {
-        this.records = records;
-    }
 
     public Date getCheckDate() {
         return checkDate;
@@ -68,13 +60,12 @@ public class Check {
         this.checkDate = checkDate;
     }
 
+    public Boolean getLastSuccess() { return lastSuccess; }
+    public void setLastSuccess(Boolean lastSuccess) { this.lastSuccess = lastSuccess; }
+
     public String getCheckDateString() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         return checkDate == null ? "" : simpleDateFormat.format(checkDate);
-    }
-
-    public void addRecord(Record record) {
-        records.add(record);
     }
 
 }

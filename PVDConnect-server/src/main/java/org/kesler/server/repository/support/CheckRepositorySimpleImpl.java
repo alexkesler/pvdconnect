@@ -13,7 +13,7 @@ public class CheckRepositorySimpleImpl implements CheckRepository {
     private List<Check> checks = new ArrayList<Check>();
 
     @Override
-    public void addCheck(Check check) {
+    public void saveCheck(Check check) {
 
         Iterator<Check> iterator = checks.iterator();
         Check chk = null;
