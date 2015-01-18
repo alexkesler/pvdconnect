@@ -2,7 +2,9 @@ package org.kesler.server.repository.support;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.kesler.server.domain.Branch;
+import org.kesler.server.domain.Record;
 import org.kesler.server.repository.BranchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +68,19 @@ public class BranchRepositoryHibernateImpl implements BranchRepository {
     public void removeBranch(Branch branch) {
         log.info("Remove branch " + branch.getName());
         try {
+            log.info("Removing records for branch..");
+            this.sessionFactory.getCurrentSession()
+                    .createQuery("delete from Record where branch=:branch")
+                    .setParameter("branch",branch)
+                    .executeUpdate();
+
+            log.info("Removing checks for branch..");
+            this.sessionFactory.getCurrentSession()
+                    .createQuery("delete from Check where branch=:branch")
+                    .setParameter("branch",branch)
+                    .executeUpdate();
+
+            log.info("Removing branch..");
             this.sessionFactory.getCurrentSession()
                     .delete(branch);
         } catch (HibernateException e) {
