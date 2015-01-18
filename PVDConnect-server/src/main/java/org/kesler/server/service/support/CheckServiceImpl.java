@@ -54,6 +54,7 @@ public class CheckServiceImpl implements CheckService {
             try {
                 recheck(check);
                 check.setLastSuccess(true);
+                checkRepository.saveCheck(check);
 
             } catch (SQLException sqle) {
                 log.error("Error connecting PVD server: " + branch.getPvdIp() + " - " + sqle, sqle);
@@ -61,10 +62,11 @@ public class CheckServiceImpl implements CheckService {
                 message="Ошибка получения данных";
             }
 
-            checkRepository.saveCheck(check);
 
         }
         log.info("Checks complete");
+        message="Готово";
+
     }
 
     private void recheck(Check check) throws SQLException{

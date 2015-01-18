@@ -1,7 +1,5 @@
 package org.kesler.common;
 
-import java.util.UUID;
-
 public class BranchDTO {
     private Long id;
     private String uuid;

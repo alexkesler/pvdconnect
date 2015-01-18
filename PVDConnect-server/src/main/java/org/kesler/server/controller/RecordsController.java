@@ -33,13 +33,6 @@ public class RecordsController {
     public @ResponseBody
     RecordsDTO getRecordsByCode(@RequestParam String code) {
         List<RecordDTO> recordDTOList = new ArrayList<RecordDTO>();
-//        Collection<Check> checks = checkRepository.getAllChecks();
-//        for (Check check:checks) {
-//            for(Record record :check.getRecords()) {
-//                if (record.getRegnum().contains(code))
-//                    recordDTOList.add(RecordTransform.transform(record));
-//            }
-//        }
 
         Collection<Record> records = recordRepository.getRecordsByRegnum(code);
         for (Record record:records) {

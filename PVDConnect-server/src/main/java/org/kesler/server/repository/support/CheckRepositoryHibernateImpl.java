@@ -1,5 +1,6 @@
 package org.kesler.server.repository.support;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.kesler.server.domain.Branch;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Repository
@@ -36,18 +38,31 @@ public class CheckRepositoryHibernateImpl implements CheckRepository {
     @Override
     public Collection<Check> getAllChecks() {
         log.info("Getting all checks");
-        return this.sessionFactory.getCurrentSession()
-                .createCriteria(Check.class)
-                .list();
+        Collection<Check> checks = new ArrayList<>();
+        try {
+            checks = this.sessionFactory.getCurrentSession()
+                    .createCriteria(Check.class)
+                    .list();
+        } catch (HibernateException e) {
+            log.error("Error getting Checks " + e, e);
+            throw new RuntimeException("Error getting Checks",e);
+        }
+        return checks;
     }
 
     @Override
     public Check getCheckByBranch(Branch branch) {
         log.info("Getting check for branch " + branch.getName());
-        Collection<Check> checks = this.sessionFactory.getCurrentSession()
-                .createCriteria(Check.class)
-                .add(Restrictions.eq("branch",branch))
-                .list();
+        Collection<Check> checks = new ArrayList<>();
+        try {
+            checks = this.sessionFactory.getCurrentSession()
+                    .createCriteria(Check.class)
+                    .add(Restrictions.eq("branch", branch))
+                    .list();
+        } catch (HibernateException e) {
+            log.error("Error getting Checks " + e, e);
+            throw new RuntimeException("Error getting Checks",e);
+        }
         if (checks.size()==0) return null;
         else return checks.iterator().next();
     }

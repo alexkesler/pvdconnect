@@ -1,5 +1,6 @@
 package org.kesler.server.repository.support;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -43,22 +44,33 @@ public class RecordRepositoryHibernateImpl implements RecordRepository {
 
         if (firstDate != null) {
             log.debug("Getting stored records in and after " + firstDate);
-            Collection<Record> storedRecords = sessionFactory.getCurrentSession()
-                    .createCriteria(Record.class)
-                    .add(Restrictions.eq("branch",branch))
-                    .add(Restrictions.ge("regdate", firstDate))
-                    .list();
+            Collection<Record> storedRecords;
+            try {
+                storedRecords = sessionFactory.getCurrentSession()
+                        .createCriteria(Record.class)
+                        .add(Restrictions.eq("branch",branch))
+                        .add(Restrictions.ge("regdate", firstDate))
+                        .list();
+            } catch (HibernateException e) {
+                log.error("Error getting Stored records " + e, e);
+                throw new RuntimeException("Error getting stored records",e);
+            }
+
             for (Record record : storedRecords) {
                 records.remove(record);
             }
         }
 
-
-        Session session = sessionFactory.getCurrentSession();
-
         log.info("Save " + records.size() + " new records");
-        for (Record record : records) {
-            session.save(record);
+
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            for (Record record : records) {
+                session.save(record);
+            }
+        } catch (HibernateException e) {
+            log.error("Error saving records " + e, e);
+            throw new RuntimeException("Error saving records",e);
         }
 
     }
@@ -66,19 +78,32 @@ public class RecordRepositoryHibernateImpl implements RecordRepository {
     @Override
     public Collection<Record> getRecordsByRegnum(String regnum) {
         log.info("Get records by code: " + regnum);
-        return this.sessionFactory.getCurrentSession()
-                .createCriteria(Record.class)
-                .add(Restrictions.like("regnum","%"+regnum+"%"))
-                .list();
+        Collection<Record> records;
+        try {
+            records = this.sessionFactory.getCurrentSession()
+                    .createCriteria(Record.class)
+                    .add(Restrictions.like("regnum", "%" + regnum + "%"))
+                    .list();
+        } catch (HibernateException e) {
+            log.error("Error getting records " + e, e);
+            throw new RuntimeException("Error getting records",e);
+        }
+        return records;
     }
 
     @Override
     public Integer getRecordsCount(Branch branch) {
         log.info("Getting records count for branch: "+branch.getName());
-        Long count = (Long) (sessionFactory.getCurrentSession()
-                .createQuery("select count(*) from Record as record where record.branch=:branch")
-                .setParameter("branch",branch)
-                .iterate().next());
+        Long count;
+        try {
+            count = (Long) (sessionFactory.getCurrentSession()
+                    .createQuery("select count(*) from Record as record where record.branch=:branch")
+                    .setParameter("branch", branch)
+                    .iterate().next());
+        } catch (HibernateException e) {
+            log.error("Error getting records count" + e, e);
+            throw new RuntimeException("Error getting records count",e);
+        }
         return count.intValue();
     }
 }

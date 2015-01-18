@@ -132,6 +132,7 @@ public class BranchListController extends AbstractController{
         branchController.initBranch(selectedBranch);
         branchController.showAndWait(stage);
         if (branchController.getResult() == AbstractController.Result.OK) {
+            log.info("Update branch " + selectedBranch.getName());
             UpdateTask updateTask = new UpdateTask(selectedBranch);
             BooleanBinding runningBinding = updateTask.stateProperty().isEqualTo(Task.State.RUNNING);
             updateProgressIndicator.visibleProperty().bind(runningBinding);
@@ -159,6 +160,7 @@ public class BranchListController extends AbstractController{
                 .message("Удалить выбранный филиал: " + selectedBranch.getName())
                 .showConfirm();
         if (response == Dialog.ACTION_YES) {
+            log.info("Remove branch " + selectedBranch.getName());
             RemoveTask removeTask = new RemoveTask(selectedBranch);
             BooleanBinding runningBinding = removeTask.stateProperty().isEqualTo(Task.State.RUNNING);
             updateProgressIndicator.visibleProperty().bind(runningBinding);
@@ -210,7 +212,8 @@ public class BranchListController extends AbstractController{
 
         @Override
         protected void succeeded() {
-            FXUtils.triggerUpdateListView(branchListView, branch);
+//            FXUtils.triggerUpdateListView(branchListView, branch);
+            FXUtils.updateObservableList(observableBranches);
             branchListView.getSelectionModel().select(branch);
         }
 

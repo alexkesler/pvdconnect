@@ -1,12 +1,12 @@
 package org.kesler.server.repository.support;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.kesler.server.domain.Branch;
 import org.kesler.server.repository.BranchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -36,28 +36,42 @@ public class BranchRepositoryHibernateImpl implements BranchRepository {
     @Override
     public Collection<Branch> getAllBranches() {
         log.info("Getting all branches");
-        return this.sessionFactory.getCurrentSession()
-                .createCriteria(Branch.class)
-                .list();
+        Collection<Branch> branches;
+        try {
+            branches = this.sessionFactory.getCurrentSession()
+                    .createCriteria(Branch.class)
+                    .list();
+        } catch (HibernateException e) {
+            log.error("Error getting Branches " + e, e);
+            throw new RuntimeException("Error getting Branches",e);
+        }
+        return branches;
     }
 
-    @Override
-    public Branch getBranchById(Long id) {
-        return null;
-    }
 
     @Override
     public void updateBranch(Branch branch) {
         log.info("Update branch " + branch.getName());
-        this.sessionFactory.getCurrentSession()
-                .update(branch);
+
+        try {
+            this.sessionFactory.getCurrentSession()
+                    .update(branch);
+        } catch (HibernateException e) {
+            log.error("Error updating Branch " + e, e);
+            throw new RuntimeException("Error updating Branch",e);
+        }
     }
 
     @Override
     public void removeBranch(Branch branch) {
         log.info("Remove branch " + branch.getName());
-        this.sessionFactory.getCurrentSession()
-                .delete(branch);
+        try {
+            this.sessionFactory.getCurrentSession()
+                    .delete(branch);
+        } catch (HibernateException e) {
+            log.error("Error removing Branch " + e, e);
+            throw new RuntimeException("Error removing Branch",e);
+        }
 
     }
 }

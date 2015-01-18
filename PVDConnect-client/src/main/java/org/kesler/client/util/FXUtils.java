@@ -1,5 +1,6 @@
 package org.kesler.client.util;
 
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.control.ListView;
@@ -10,7 +11,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Универсальные вспомогательные функции для работы с JavaFX
@@ -55,5 +58,15 @@ public abstract class FXUtils {
         return parentPath;
 
     }
+
+    public static <T> void updateObservableList(final ObservableList<T> observableList) {
+
+        List<T> items = new ArrayList<T>(observableList);
+        observableList.removeAll(observableList);
+        for (T item:items)
+            observableList.add(item);
+
+    }
+
 
 }
