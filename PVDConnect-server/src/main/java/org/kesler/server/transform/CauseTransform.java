@@ -58,30 +58,38 @@ public abstract class CauseTransform {
     private static String decodeState(Integer state) {
 
         String stateString = "Не определено";
+        if (state == null) {
+            log.warn("State is null");
+            return stateString;
+        }
 
         // расшифровываем статус
-        if (state != null) {
-            switch (state) {
-                case 0:
-                    stateString = "В работе";
-                    break;
-                case 1:
-                    stateString = "Исполнено";
-                    break;
-                case 2:
-                    stateString = "Приостановлено";
-                    break;
-                default:
-                    stateString = "Не определено(" + state + ")";
-            }
+        switch (state) {
+            case 0:
+                stateString = "В работе";
+                break;
+            case 1:
+                stateString = "Исполнено";
+                break;
+            case 2:
+                stateString = "Приостановлено";
+                break;
+            default:
+                stateString = "Не определено(" + state + ")";
         }
+
         log.debug("Decode state " + state + "--> " + stateString);
         return stateString;
 
     }
 
     private static String decodeStatusMd(String statusMd) {
-        String statusMdString;
+        String statusMdString = "Не определено";
+
+        if (statusMd==null) {
+            log.warn("StatusMD is null");
+            return statusMdString;
+        }
 
         switch (statusMd) {
             case "001":
@@ -141,7 +149,12 @@ public abstract class CauseTransform {
 
     private static String decodePurpose(Integer purpose) {
 
-        String purposeString;
+        String purposeString = "Не определено";
+
+        if (purpose == null) {
+            log.warn("Purpose is null");
+            return purposeString;
+        }
 
         switch (purpose) {
             case 101:
@@ -323,7 +336,11 @@ public abstract class CauseTransform {
     }
 
     private static String decodeStep(Step step) {
-        String stepString;
+        String stepString = "Не определен";
+        if (step == null) {
+            log.warn("Step is null");
+            return stepString;
+        }
 
         Date dateBegin = step.getDateBegin();
         Date dateEnd = step.getDateEnd();
@@ -348,7 +365,12 @@ public abstract class CauseTransform {
     }
 
     private static String decodeStepOperation(String operation) {
-        String operationString;
+        String operationString = "Не определена";
+
+        if (operation == null) {
+            log.warn("Operation is null");
+            return operationString;
+        }
 
         switch (operation) {
             case "PackageCorrection":

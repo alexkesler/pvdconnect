@@ -58,7 +58,7 @@ public class CauseServiceImpl implements CauseService {
         log.info("Reading cause from server " + branch.getPvdIp());
 
         log.debug("Connecting >>>");
-        Connection conn = null;
+        Connection conn;
         try {
             conn = OracleUtil.createConnection(branch.getPvdIp(), branch.getPvdUser(), branch.getPvdPassword());
         } catch (SQLException e) {
