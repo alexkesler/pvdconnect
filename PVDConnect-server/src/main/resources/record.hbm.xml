@@ -13,5 +13,6 @@
         <property name="causePvdId" column="CausePVDID"/>
         <property name="regnum" column="Regnum"/>
         <property name="regdate" type="timestamp" column="Regdate"/>
+        <property name="prevRegnum" column="PrevRegnum" />
     </class>
 </hibernate-mapping>
