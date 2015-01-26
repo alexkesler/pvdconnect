@@ -3,11 +3,13 @@ package org.kesler.common;
 import java.util.Date;
 
 public class RecordDTO  {
+
     private Long id;
     private BranchDTO branchDTO;
     private String causeId;
     private String regnum;
     private Date regdate;
+    private String prevRegnum;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -21,12 +23,10 @@ public class RecordDTO  {
     public String getRegnum() { return regnum; }
     public void setRegnum(String regnum) { this.regnum = regnum; }
 
-    public Date getRegdate() {
-        return regdate;
-    }
+    public Date getRegdate() { return regdate; }
+    public void setRegdate(Date regdate) { this.regdate = regdate; }
 
-    public void setRegdate(Date regdate) {
-        this.regdate = regdate;
-    }
+    public String getPrevRegnum() { return prevRegnum; }
+    public void setPrevRegnum(String prevRegnum) { this.prevRegnum = prevRegnum; }
 
 }

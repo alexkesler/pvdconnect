@@ -80,8 +80,9 @@ public class CheckServiceImpl implements CheckService {
                 "from DPS$RECBOOKITEM RBI " +
                 "where RBI.FROMCAUSE=1" + andDateSqlString;
 
-        String query = "SELECT RBI.ID_CAUSE, RBI.REGNUM, RBI.REGDATE " +
+        String query = "SELECT RBI.ID_CAUSE, RBI.REGNUM, RBI.REGDATE, C.PREVCAUSE_NUM " +
                 "from DPS$RECBOOKITEM RBI " +
+                "join DPS$D_CAUSE C on C.ID = RBI.ID_CAUSE " +
                 "where RBI.FROMCAUSE=1" + andDateSqlString;
 
         log.debug("Connecting branch: " + branch.getName());
@@ -152,6 +153,7 @@ public class CheckServiceImpl implements CheckService {
             record.setCausePvdId(rs.getString("ID_CAUSE"));
             record.setRegnum(rs.getString("REGNUM"));
             record.setRegdate(rs.getDate("REGDATE"));
+            record.setPrevRegnum(rs.getString("PREVCAUSE_NUM"));
 
             records.add(record);
             current++;

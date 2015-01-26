@@ -10,6 +10,7 @@ public class Record {
     private Check check;
     private String causePvdId;
     private String regnum;
+    private String prevRegnum;
     private Date regdate;
 
     public Long getId() { return id; }
@@ -30,6 +31,9 @@ public class Record {
 
     public String getRegnum() { return regnum; }
     public void setRegnum(String regnum) { this.regnum = regnum; }
+
+    public String getPrevRegnum() { return prevRegnum; }
+    public void setPrevRegnum(String prevRegnum) { this.prevRegnum = prevRegnum; }
 
     public Date getRegdate() {
         return regdate;

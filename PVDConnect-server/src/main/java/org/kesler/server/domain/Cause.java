@@ -12,20 +12,16 @@ import java.util.UUID;
 
 public class Cause {
 
-    private Long id;
     private String uuid = UUID.randomUUID().toString();
     private String causeId;
     private Record record;
     private Integer purpose;
-    private String purposeString;
     private Collection<Applicant> applicants;
     private Obj obj;
     private Collection<Step> steps;
     private Step curStep;
     private Integer state;
-    private String stateString;
     private String statusMd;
-    private String statusMdString;
     private Date startDate;
     private Date stateChangeDate;
     private Date estimateDate;
