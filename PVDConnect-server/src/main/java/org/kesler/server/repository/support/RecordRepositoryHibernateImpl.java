@@ -83,6 +83,7 @@ public class RecordRepositoryHibernateImpl implements RecordRepository {
             records = this.sessionFactory.getCurrentSession()
                     .createCriteria(Record.class)
                     .add(Restrictions.like("regnum", "%" + regnum + "%"))
+                    .setMaxResults(500)
                     .list();
         } catch (HibernateException e) {
             log.error("Error getting records " + e, e);
