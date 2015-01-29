@@ -223,7 +223,7 @@
                 <configuration>
                     <serverId>AppHost</serverId>
                     <fromDir>${project.build.directory}</fromDir>
-                    <includes>lib/*,${project.build.finalName}.jar,getdown.txt,digest.txt
+                    <includes>lib/*,${project.build.finalName}.jar,getdown.txt,digest.txt,mfc.png
                     </includes>
                     <url>scp://10.10.0.118</url>
                     <toDir>/srv/www/default/public_html/pvdconnect</toDir>

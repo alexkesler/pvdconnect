@@ -5,6 +5,9 @@ allow_offline = true
 
 # UI Configuration
 ui.name = PVDConnect
+ui.background_image = mfc.png
+ui.progress = 23, 209, 250, 17
+ui.status = 23, 230, 250, 15
 
 # Application jar files
 code = PVDConnect-client.jar
@@ -31,6 +34,7 @@ code = lib/spring-web-3.1.3.RELEASE.jar
 
 
 #resource = config/PVDConnect-client.properties
+resource = mfc.png
 
 
 # The main entry point for the application
